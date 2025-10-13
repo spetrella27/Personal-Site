@@ -72,6 +72,33 @@
         .contact-info {
             margin-top: 20px;
         }
+        
+        .email-line {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .copy-btn {
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 0.75em;
+            cursor: pointer;
+            color: #555;
+            line-height: 1.4;
+        }
+        
+        .copy-btn:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .copy-btn.copied {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
     </style>
 </head>
 <body>
@@ -79,16 +106,21 @@
         <h1>Steve Petrella</h1>
         
         <p class="intro">
-            I'm a product manager, SEO, writer, editor and amateur designer who has spent the last eight years in the sports betting space at <a href="https://www.actionnetwork.com">Action Network</a>.
+            I'm a product manager, SEO, writer, editor and amateur designer who has spent the last eight years in the sports betting space at <a href="https://www.actionnetwork.com">Action Network</a>. </br>We were a first mover in the sports betting media space, sold for $240M, and did some really cool stuff along the way. While leading Action's editorial team, I increased our readership from 13.4M in the fall of 2019 to 30M+ in the falls of 2020 and 2021. Since late 2022, I've worked on affiliate projects that have generated 106,000 new customers for sportsbooks and more than $35 million in revenue for Action & Better Collective.
         </p>
         
         <p>
-            I like to tinker with 
+            I make weird stuff that's useful to me.
         </p>
         
         <div class="contact-info">
             <ul>
-                <li>Email: <a href="mailto:stevenjpetrella@gmail.com">stevenjpetrella@gmail.com</a></li>
+                <li>
+                    <div class="email-line">
+                        Email: <a href="mailto:stevenjpetrella@gmail.com">stevenjpetrella@gmail.com</a>
+                        <button class="copy-btn" onclick="copyEmail(this)">Copy</button>
+                    </div>
+                </li>
                 <li>Twitter: <a href="https://twitter.com/steve_petrella">@steve_petrella</a></li>
                 <li>LinkedIn: <a href="https://www.linkedin.com/in/steven-petrella-60642829/">Steven Petrella</a></li>
             </ul>
@@ -108,5 +140,19 @@
             <li><a href="https://www.actionnetwork.com/nhl/what-would-usa-ussr-moneyline-have-been-in-1980-miracle-on-ice">What Would the USA's Moneyline Have Been vs. USSR in 1980 Olympics?</a></li>
         </ul>
     </div>
+    
+    <script>
+        function copyEmail(button) {
+            const email = 'stevenjpetrella@gmail.com';
+            navigator.clipboard.writeText(email).then(() => {
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+            });
+        }
+    </script>
 </body>
 </html>
