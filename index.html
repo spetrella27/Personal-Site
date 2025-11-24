@@ -15,62 +15,333 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
             line-height: 1.6;
             color: #333;
-            background-color: #e8e8e8;
-            padding: 20px;
+            background-color: #f5f5f5;
+            padding: 40px 20px;
+        }
+
+        .logo-container {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+}
+
+        .logo-container img {
+            max-width: 70px;
+            max-height: 70px;
+            object-fit: contain;
         }
         
         .container {
             max-width: 800px;
             margin: 0 auto;
-            background-color: white;
-            padding: 40px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background-color: #f5f5f5;
+            padding: 0 20px;
         }
         
         h1 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
+            font-size: 3em;
+            margin-bottom: 30px;
             color: #1a1a1a;
+            font-weight: 700;
         }
         
         h2 {
-            font-size: 1.8em;
-            margin-top: 40px;
+            font-size: 1.4em;
+            margin-top: 50px;
             margin-bottom: 20px;
             color: #1a1a1a;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
         }
         
         p {
-            margin-bottom: 15px;
+            margin-bottom: 18px;
             font-size: 1.1em;
+            color: #444;
         }
         
         a {
             color: #0066cc;
             text-decoration: none;
+            transition: color 0.2s;
         }
         
         a:hover {
-            text-decoration: underline;
+            color: #004499;
         }
         
         ul {
-            margin-left: 20px;
+            margin-left: 0;
             margin-bottom: 20px;
+            list-style: none;
         }
         
         li {
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             font-size: 1.05em;
+            color: #444;
         }
         
         .intro {
-            font-size: 1.15em;
-            margin-bottom: 25px;
+            font-size: 1.2em;
+            margin-bottom: 35px;
+            color: #333;
         }
         
         .contact-info {
+            margin-top: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .contact-info ul {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .contact-info li {
+            margin: 0;
+        }
+        
+        .contact-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            transition: background-color 0.2s, transform 0.2s;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .contact-icon:hover {
+            background-color: #d0d0d0;
+            transform: scale(1.1);
+        }
+        
+        .contact-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: #333;
+        }
+        
+        .copied-tooltip {
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a1a1a;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s;
+        }
+        
+        .copied-tooltip.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .copied-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid #1a1a1a;
+        }
+        
+        /* Timeline Styles */
+        .timeline-wrapper {
+            position: relative;
+            padding: 40px 0;
             margin-top: 20px;
+        }
+        
+        .timeline-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, #1a1a1a, #555);
+            transform: translateY(-50%);
+        }
+        
+        .timeline-items {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .timeline-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .logo-container {
+            width: 70px;
+            height: 70px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: bold;
+            font-size: 0.6em;
+            text-align: center;
+            padding: 8px;
+            color: #333;
+        }
+        
+        .timeline-item:hover .logo-container {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+        }
+        
+        .tooltip {
+            position: absolute;
+            bottom: calc(100% + 15px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 15px 18px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            width: 280px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s;
+            z-index: 100;
+        }
+        
+        .timeline-item:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid white;
+        }
+        
+        .tooltip-title {
+            font-weight: bold;
+            font-size: 1em;
+            margin-bottom: 4px;
+            color: #1a1a1a;
+        }
+        
+        .tooltip-dates {
+            font-size: 0.85em;
+            color: #0066cc;
+            margin-bottom: 8px;
+        }
+        
+        .tooltip-description {
+            font-size: 0.85em;
+            color: #555;
+            line-height: 1.5;
+        }
+        
+        .year-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding: 0 10px;
+        }
+        
+        .year-label {
+            font-size: 0.8em;
+            color: #888;
+        }
+
+        /* Logo colors */
+        .mlb { background: #041E42; color: white; }
+        .sporting-news { background: #d32f2f; color: white; }
+        .cox { background: #0066cc; color: white; }
+        .action { background: #1a1a1a; color: white; }
+        
+        /* Mobile: Vertical */
+        @media (max-width: 700px) {
+            .timeline-wrapper {
+                padding: 20px 0;
+            }
+            
+            .timeline-line {
+                top: 0;
+                bottom: 0;
+                left: 35px;
+                right: auto;
+                width: 4px;
+                height: auto;
+                transform: none;
+                background: linear-gradient(to bottom, #1a1a1a, #555);
+            }
+            
+            .timeline-items {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .timeline-item {
+                flex-direction: row;
+                align-items: center;
+                gap: 20px;
+            }
+            
+            .logo-container {
+                width: 60px;
+                height: 60px;
+                flex-shrink: 0;
+            }
+            
+            .tooltip {
+                position: static;
+                transform: none;
+                opacity: 1;
+                visibility: visible;
+                width: auto;
+                flex: 1;
+                box-shadow: none;
+                padding: 0;
+                background: transparent;
+            }
+            
+            .tooltip::after {
+                display: none;
+            }
+            
+            .year-labels {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -79,35 +350,135 @@
         <h1>Steve Petrella</h1>
         
         <p class="intro">
-            I'm a product manager, SEO, writer, editor and amateur designer who has spent the last eight years in the sports betting space at <a href="actionnetwork.com">Action Network</a>'.
+            I'm a product manager, SEO, writer, editor and amateur designer who has spent the last eight years in the sports betting space at <a href="https://www.actionnetwork.com">Action Network</a>.
+        </p>
+        
+        <p class="intro">
+            We were a first mover in the sports betting media space, sold for $240M in 2021, and did some really cool stuff along the way. While leading Action's editorial team, I increased our readership from 13.4M in the fall of 2019 to 30M+ in the falls of 2020 and 2021. Since 2023, I've worked on affiliate and product strategy that has generated 106,000 new customers for sportsbooks and more than $35 million in revenue for Action & Better Collective.
         </p>
         
         <p>
-            I like to tinker with 
+            I make weird stuff that's useful to me.
         </p>
         
         <div class="contact-info">
             <ul>
-                <li>Email: <a href="mailto:stevenjpetrella@gmail.com">stevenjpetrella@gmail.com</a></li>
-                <li>Twitter: <a href="https://twitter.com/steve_petrella">@steve_petrella</a></li>
-                <li>LinkedIn: <a href="https://www.linkedin.com/in/steven-petrella-60642829/">Steven Petrella</a></li>
+                <li>
+                    <div class="contact-icon" onclick="copyEmail(this)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z"/><path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z"/></svg>
+                        <span class="copied-tooltip">Copied!</span>
+                    </div>
+                </li>
+                <li>
+                    <a href="https://twitter.com/steve_petrella" target="_blank" class="contact-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/steven-petrella-60642829/" target="_blank" class="contact-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
+                    </a>
+                </li>
             </ul>
         </div>
         
-        <h2>Other Projects</h2>
+        <h2>Career</h2>
+        
+        <div class="timeline-wrapper">
+            <div class="timeline-line"></div>
+            <div class="timeline-items">
+                
+                <div class="timeline-item">
+                    <div class="logo-container">
+                        <img src="penn-state.jpg" alt="Penn State">
+                    </div>
+                    <div class="tooltip">
+                        <div class="tooltip-title">Penn State University</div>
+                        <div class="tooltip-dates">2010 – 2014</div>
+                        <div class="tooltip-description">Spent most of my time as a writer and editor for the Daily Collegian, Penn State's student newspaper.</div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="logo-container">
+                        <img src="mlb.png" alt="MLB.com">
+                    </div>
+                    <div class="tooltip">
+                        <div class="tooltip-title">MLB.com</div>
+                        <div class="tooltip-dates">2013 – 2014</div>
+                        <div class="tooltip-description">Intern covering the Pirates and Red Sox on-site.</div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="logo-container">
+                        <img src="sn.jpg" alt="Sporting News">
+                    </div>
+                    <div class="tooltip">
+                        <div class="tooltip-title">Sporting News</div>
+                        <div class="tooltip-dates">April 2015 – Aug 2016</div>
+                        <div class="tooltip-description">Writer and editor for legacy sports media website. Learned SEO and how to drive traffic at scale. Covered sports betting, horse racing, golf, and combat sports.</div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="logo-container">
+                        <img src="coxmedia.png" alt="Cox Media Group">
+                    </div>
+                    <div class="tooltip">
+                        <div class="tooltip-title">Cox Media Group</div>
+                        <div class="tooltip-dates">Aug 2016 – May 2018</div>
+                        <div class="tooltip-description">Ran SEO & Facebook strategy for Landof10.com (Big Ten sports). Grew collection of four college sports sites to 40M pageviews/month. Sites eventually shut down due to monetization challenges.</div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="logo-container">
+                        <img src="action.jpg" alt="Action Network">
+                    </div>
+                    <div class="tooltip">
+                        <div class="tooltip-title">Action Network / Better Collective</div>
+                        <div class="tooltip-dates">June 2018 – Present</div>
+                        <div class="tooltip-description">Started as college sports editor, promoted to editor-in-chief. Traffic exploded after removing paywall in 2020. Sold for $240M in 2021. Now run affiliate strategy (~$13M/yr revenue), product management, SEO, and monetization.</div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="year-labels">
+            <span class="year-label">2010</span>
+            <span class="year-label">2014</span>
+            <span class="year-label">2016</span>
+            <span class="year-label">2018</span>
+            <span class="year-label">Present</span>
+        </div>
+        
+        <h2>Projects</h2>
         <ul>
             <li>Coming soon</li>
         </ul>
         
-        <h2>Some of My Favorite Writing</h2>
-        <ul>
+        <h2>Writing</h2>
+        <ul class="writing-list">
             <li><a href="https://www.actionnetwork.com/education/same-game-parlay-guide">The Same Game Parlay Guide: Why You're Approaching SGPs All Wrong</a></li>
             <li><a href="https://www.actionnetwork.com/golf/2025-masters-pool-strategy-picks-how-to-win-a-tiers-format">How to Win (Or Finish Dead Last) in Your Masters Pool</a></li>
             <li><a href="https://www.actionnetwork.com/entertainment/james-holzhauer-jeopardy-sports-betting-expected-value-2019">The Gambling Strategies James Holzhauer Used to Break Jeopardy!</a></li>
             <li><a href="https://www.actionnetwork.com/ncaaf/college-football-coaching-job-model-22-data-points-ranking-every-power-5-gig">The College Football Coaching Model: Quantifying CFB's Best & Worst Jobs</a></li>
             <li><a href="https://www.actionnetwork.com/nhl/what-would-usa-ussr-moneyline-have-been-in-1980-miracle-on-ice">What Would the USA's Moneyline Have Been vs. USSR in 1980 Olympics?</a></li>
-
         </ul>
     </div>
+    
+    <script>
+        function copyEmail(element) {
+            const email = 'stevenjpetrella@gmail.com';
+            navigator.clipboard.writeText(email).then(() => {
+                const tooltip = element.querySelector('.copied-tooltip');
+                tooltip.classList.add('show');
+                setTimeout(() => {
+                    tooltip.classList.remove('show');
+                }, 1500);
+            });
+        }
+    </script>
 </body>
 </html>
