@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Perfect Article Design - Steve Petrella</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --text-primary: #1a1a1a;
+            --text-secondary: #4a4a4a;
+            --text-muted: #6b6b6b;
+            --bg-page: #ffffff;
+            --accent: #4a5a8a;
+            --accent-light: #f0f3f8;
+            --border: #e5e5e5;
+        }
+
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 19px;
+            line-height: 1.45;
+            color: var(--text-primary);
+            background-color: var(--bg-page);
+        }
+
+        /* Layout */
+        .page-wrapper {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Sidebar TOC - Desktop */
+        .toc-sidebar {
+            width: 220px;
+            flex-shrink: 0;
+            padding: 60px 20px 40px 40px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .toc-sidebar nav {
+            position: sticky;
+            top: 60px;
+        }
+
+        .toc-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        .toc-list {
+            list-style: none;
+        }
+
+        .toc-list li {
+            margin-bottom: 8px;
+        }
+
+        .toc-list a {
+            font-size: 14px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toc-list a:hover {
+            color: var(--accent);
+        }
+
+        .toc-list a.active {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .toc-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent-light);
+            color: var(--accent);
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            max-width: 700px;
+            padding: 60px 40px 100px;
+        }
+
+        /* Back Navigation */
+        .back-link {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 14px;
+            color: var(--text-muted);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 40px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+
+        .back-link svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Article Header */
+        .article-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            max-width: 60ch;
+        }
+
+        /* Hero Image */
+        .hero-section {
+            margin-bottom: 48px;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 300px;
+            background: #000;
+            margin-bottom: 12px;
+        }
+
+        .hero-caption {
+            font-size: 15px;
+            font-style: italic;
+            color: var(--text-muted);
+            max-width: 60ch;
+        }
+
+        /* Article Body */
+        .article-body {
+            max-width: 60ch;
+        }
+
+        .article-body p {
+            margin-bottom: 1.5em;
+            max-width: 60ch;
+        }
+
+        /* Numbered Headings */
+        .section-heading {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-top: 2.5em;
+            margin-bottom: 1em;
+            scroll-margin-top: 40px;
+        }
+
+        .heading-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            flex-shrink: 0;
+        }
+
+        .section-heading h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1.3;
+        }
+
+        /* Links */
+        .article-body a {
+            color: #2563eb;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .article-body a:hover {
+            text-decoration-thickness: 2px;
+        }
+
+        /* Special link that opens modal */
+        .modal-link {
+            cursor: pointer;
+        }
+
+        /* Bulleted Lists */
+        .article-body ul {
+            background: var(--accent-light);
+            padding: 20px 20px 20px 44px;
+            margin: 1.5em 0;
+            border-radius: 8px;
+            max-width: 60ch;
+        }
+
+        .article-body ul li {
+            margin-bottom: 10px;
+            padding-left: 8px;
+        }
+
+        .article-body ul li:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Mobile TOC - Bottom Float */
+        .toc-mobile {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-top: 1px solid var(--border);
+            padding: 12px 16px;
+            z-index: 100;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .toc-mobile-inner {
+            display: flex;
+            gap: 8px;
+            white-space: nowrap;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        .toc-mobile a {
+            font-size: 13px;
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .toc-mobile a:hover,
+        .toc-mobile a.active {
+            background: var(--accent-light);
+            color: var(--accent);
+        }
+
+        .toc-mobile .toc-number {
+            width: 18px;
+            height: 18px;
+            font-size: 10px;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #fff;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-muted);
+            padding: 4px;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        .modal-body {
+            padding: 24px;
+            overflow-y: auto;
+            max-height: 50vh;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .modal-body p {
+            margin-bottom: 1em;
+        }
+
+        .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .modal-btn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            transition: background 0.2s;
+        }
+
+        .modal-btn:hover {
+            background: #3a4a7a;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .toc-sidebar {
+                display: none;
+            }
+
+            .toc-mobile {
+                display: block;
+            }
+
+            .main-content {
+                padding: 40px 20px 120px;
+            }
+
+            .article-body {
+                max-width: 45ch;
+            }
+
+            .article-body p {
+                max-width: 45ch;
+            }
+
+            .article-body ul {
+                max-width: 45ch;
+            }
+
+            .hero-caption {
+                max-width: 45ch;
+            }
+
+            .article-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .hero-image {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-wrapper">
+        <!-- Sidebar TOC - Desktop -->
+        <aside class="toc-sidebar">
+            <nav>
+                <div class="toc-title">Contents</div>
+                <ul class="toc-list">
+                    <li><a href="#intro">Intro</a></li>
+                    <li><a href="#hero-images"><span class="toc-number">1</span> Hero Images</a></li>
+                    <li><a href="#font-type"><span class="toc-number">2</span> Font Type</a></li>
+                    <li><a href="#headings"><span class="toc-number">3</span> Headings</a></li>
+                    <li><a href="#line-length"><span class="toc-number">4</span> Line Length</a></li>
+                    <li><a href="#visual-breaks"><span class="toc-number">5</span> Visual Breaks</a></li>
+                    <li><a href="#line-breaks"><span class="toc-number">6</span> Line Breaks</a></li>
+                    <li><a href="#table-of-contents"><span class="toc-number">7</span> Table of Contents</a></li>
+                    <li><a href="#links"><span class="toc-number">8</span> Links</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <a href="index.html" class="back-link">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                </svg>
+                Back to home
+            </a>
+
+            <article>
+                <h1 class="article-title">The Perfect Article Design</h1>
+
+                <div class="hero-section">
+                    <div class="hero-image"></div>
+                    <p class="hero-caption">If you don't care to learn about the ideation process, you can skip half this guide</p>
+                </div>
+
+                <div class="article-body" id="intro">
+                    <p>Nobody wants to read. It's scary. It's isolating. Reading anything beyond a tweet requires relative silence.</p>
+
+                    <p>So I've been on this meta quest to combat the difficulty of reading through design. I can't solve the need for silence, or that it will always be easier to get lost in short-form video. But if we can combat some other issues the modern online reader faces, we can make it .. less scary.</p>
+
+                    <p>This is a constantly-evolving page in which I try to design the perfect article while discussing my theories on article design, readability, what's necessary on the modern Internet, and more.</p>
+
+                    <div class="section-heading" id="hero-images">
+                        <span class="heading-number">1</span>
+                        <h2>Hero Images: A Relic of the Early Internet</h2>
+                    </div>
+
+                    <p>Do we need hero images atop articles? Not really. They feel like a relic of the early Internet, when newspapers just posted the same photo that appeared in print atop the web version. And the image mattered, or helped support the story.</p>
+
+                    <p>But trying to rank an article in Google News or posting a piece to Facebook required an image to create a "card" -- so we kept doing it. Even new platforms like Substack employ cards in their feed. But in the article itself, hero images so rarely add any value, and take up valuable space above the fold.</p>
+
+                    <div class="section-heading" id="font-type">
+                        <span class="heading-number">2</span>
+                        <h2>Font Type</h2>
+                    </div>
+
+                    <p>There's no "most readable" font because people read best what they read most. And there's little conclusive research about a particular font type being more legible, outside of <a href="https://www.semanticscholar.org/paper/Size-matters-(spacing-not)%3A-18-points-for-a-Rello-Pielot/5608197a620c2151cd13d9db65526bfbd3299eb2">those with dyslexia</a>.</p>
+
+                    <p>Most English text in history has been printed in Serif fonts. The fonts with the little hooks and tips on the end, like Times New Roman. They read great in print.</p>
+
+                    <p>On the Internet, designers favor Sans Serif. The fonts without the little hooks, like Arial. That's also a bit of a relic because screen resolution in the early Internet wasn't high enough to display Serifs clearly. That's mostly been solved by HD screens with high pixel per inch (PPI) counts. Apple debuted the first 200+ PPI screen in 2012, and modern iPhones have PPIs north of 400.</p>
+
+                    <ul>
+                        <li>Universally available. Not every device has every font, so stick to fonts widely used -- Georgia, Arial, Garamond, Trebuchet.</li>
+                        <li>Consider how the font impacts other things that we'll touch on later, like line width, X-height, and line spacing.</li>
+                    </ul>
+
+                    <div class="section-heading" id="headings">
+                        <span class="heading-number">3</span>
+                        <h2>Does Anyone Read the Headings?</h2>
+                    </div>
+
+                    <p>SEO ruined headings. I skip right over them, because I've been conditioned to think they're junk designed to appeal to search engines, not something that's critical to the content.</p>
+
+                    <p>To combat that instinct, headings need some visual distinction. And they should be short or long -- either 1-3 words or an entire sentence.</p>
+
+                    <div class="section-heading" id="line-length">
+                        <span class="heading-number">4</span>
+                        <h2>Line Length</h2>
+                    </div>
+
+                    <p>When you finish reading a line, your brain takes a subconscious pause as your eyes scan back to the left side of the screen or page to start the next line. <a href="https://designregression.com/article/line-length-revisited-following-the-research">Research shows</a> that fatigue sets in around 55 characters on desktop, and ~40 on mobile. That's not a ton.</p>
+
+                    <div class="section-heading" id="visual-breaks">
+                        <span class="heading-number">5</span>
+                        <h2>Visual Breaks</h2>
+                    </div>
+
+                    <p>Coming soon.</p>
+
+                    <div class="section-heading" id="line-breaks">
+                        <span class="heading-number">6</span>
+                        <h2>Line Breaks</h2>
+                    </div>
+
+                    <p>I'm a sucker for short paragraphs. Readers feel accomplished when they finish a paragraph, just like when they complete a chapter in a book. This probably changes a bit depending on your audience. If you're writing for an audience that you know wants to read, long paragraphs are probably fine.</p>
+
+                    <p>But if you're trying to pull short-form video addicts to your writing, they'll feel accomplished when they check the paragraph box.</p>
+
+                    <div class="section-heading" id="table-of-contents">
+                        <span class="heading-number">7</span>
+                        <h2>Table of Contents</h2>
+                    </div>
+
+                    <p>Short-form video sucks us in because you can always move on and not feel bad. It's kind of the whole thing. But when I abandon an article I thought I'd like, or abandon a book, I feel some shame. A good Table of Contents is a helpful navigational tool and serves as another set of hooks, similar to a good headline.</p>
+
+                    <p>The subheadings in your table of contents eliminates some of the "unknown" in longform content. If I'm losing interest, but can recall a promise from the Table of Contents that captured my attention, I'm more likely to stick with it.</p>
+
+                    <div class="section-heading" id="links">
+                        <span class="heading-number">8</span>
+                        <h2>Links</h2>
+                    </div>
+
+                    <p>Using anything but blue text for in-text links feels too risky. Users get trained on products by using them, and ignoring ~30 years of near-universally accepted UX across the web has never felt worth it. Adding an underline or color variants on hover is fine. But don't stray too far from what's worked.</p>
+
+                    <p>I do think there's <a href="#" class="modal-link" onclick="openModal(event)">room to grow in how links function</a>.</p>
+
+                </div>
+            </article>
+        </main>
+    </div>
+
+    <!-- Mobile TOC -->
+    <div class="toc-mobile">
+        <div class="toc-mobile-inner">
+            <a href="#intro">Intro</a>
+            <a href="#hero-images"><span class="toc-number">1</span> Hero Images</a>
+            <a href="#font-type"><span class="toc-number">2</span> Font</a>
+            <a href="#headings"><span class="toc-number">3</span> Headings</a>
+            <a href="#line-length"><span class="toc-number">4</span> Line Length</a>
+            <a href="#visual-breaks"><span class="toc-number">5</span> Visual Breaks</a>
+            <a href="#line-breaks"><span class="toc-number">6</span> Line Breaks</a>
+            <a href="#table-of-contents"><span class="toc-number">7</span> TOC</a>
+            <a href="#links"><span class="toc-number">8</span> Links</a>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="linkModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>The Future of Links</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>What if links didn't take you away from what you're reading?</p>
+                <p>The biggest problem with hyperlinks is context-switching. You click a link, you're transported somewhere else, and now you've lost your place. You might never come back. The author loses you.</p>
+                <p>This modal is an experiment: giving you a preview of linked content without forcing you to leave. You get the information, but you stay in the flow.</p>
+                <p>It's not perfect for every link -- sometimes you want to dive deep into a source. But for quick references, definitions, or supporting evidence, keeping readers on the page might be the better UX.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn" onclick="closeModal()">Open full article</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal functionality
+        function openModal(e) {
+            e.preventDefault();
+            document.getElementById('linkModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('linkModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close modal on overlay click
+        document.getElementById('linkModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Close modal on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Active TOC highlighting
+        const sections = document.querySelectorAll('.section-heading, #intro');
+        const tocLinks = document.querySelectorAll('.toc-list a, .toc-mobile a');
+
+        function updateActiveLink() {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveLink);
+        updateActiveLink();
+    </script>
+
+</body>
+</html>
