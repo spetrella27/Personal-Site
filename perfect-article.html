@@ -360,12 +360,8 @@
 
         /* Responsive */
         @media (max-width: 900px) {
-            .toc-mobile {
-                display: block;
-            }
-
             .page-wrapper {
-                padding: 40px 20px 140px;
+                padding: 40px 20px 100px;
             }
 
             .article-body {
@@ -381,11 +377,23 @@
             }
 
             .hero-caption {
-                max-width: 45ch;
+                max-width: 100%;
             }
 
             .toc-inline {
                 max-width: 45ch;
+            }
+
+            .toc-mobile {
+                display: none;
+            }
+
+            .toc-mobile.visible {
+                display: block;
+            }
+
+            .page-wrapper.has-mobile-toc {
+                padding-bottom: 140px;
             }
 
             .article-title {
@@ -573,6 +581,9 @@
         // Active TOC highlighting
         const sections = document.querySelectorAll('.section-heading, #intro');
         const tocLinks = document.querySelectorAll('.toc-inline-list a, .toc-mobile a');
+        const tocInline = document.querySelector('.toc-inline');
+        const tocMobile = document.querySelector('.toc-mobile');
+        const pageWrapper = document.querySelector('.page-wrapper');
 
         function updateActiveLink() {
             let current = '';
@@ -590,6 +601,21 @@
                     link.classList.add('active');
                 }
             });
+
+            // Show/hide mobile TOC based on inline TOC visibility
+            if (tocInline && tocMobile && window.innerWidth <= 900) {
+                const tocInlineRect = tocInline.getBoundingClientRect();
+                const tocInlineBottom = tocInlineRect.bottom;
+                
+                // Show mobile TOC only when inline TOC is scrolled out of view
+                if (tocInlineBottom < 0) {
+                    tocMobile.classList.add('visible');
+                    pageWrapper.classList.add('has-mobile-toc');
+                } else {
+                    tocMobile.classList.remove('visible');
+                    pageWrapper.classList.remove('has-mobile-toc');
+                }
+            }
         }
 
         window.addEventListener('scroll', updateActiveLink);
